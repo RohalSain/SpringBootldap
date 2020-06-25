@@ -15,9 +15,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
       http
         .authorizeRequests()
-          .anyRequest().fullyAuthenticated()
-          .and()
-        .formLogin();
+        .anyRequest().authenticated()
+        .and()
+        .formLogin()
+        .loginPage("/login")
+        .usernameParameter("user")
+        .passwordParameter("pwd")
+        .defaultSuccessUrl("/dashboard", true)
+        .permitAll()
+        .and()
+        .logout()
+        .logoutSuccessUrl("/");
     }
   
     @Override

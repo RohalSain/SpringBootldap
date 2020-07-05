@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class controllerLogin {
@@ -23,12 +22,11 @@ public class controllerLogin {
 
     @PostMapping("/login")
     public String postlogin(@Valid Login login,BindingResult errors, Model model) {
-        if(errors.hasErrors() ){
+    
+        
             model.addAttribute("status","true"); 
             model.addAttribute("error", "Username/Password error");
             return "login";
-        }
-        return "redirect:/dashboard";
     }
     @GetMapping("/logout")
     public String getLogOut() {

@@ -24,7 +24,10 @@
       <label>Password :</label>
       <form:input path ="pwd" type="password"/>
       <br/>
-
+       <label for="remember"> Remember me</label>  
+       <input type="checkbox" name="remember-me" id="remember-me" />  
+    </p>
+      <br/>
       <button>login</button>
     </form:form>
 </body>

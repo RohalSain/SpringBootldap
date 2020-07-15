@@ -13,7 +13,7 @@
    <div class="horizontal-left-side-nav-addition">
     <ul>
       <li><a href="#home">Home</a></li>
-      <li><a href="#news">News</a></li>
+      <li><a href="/resetPassword">ldap RestPassword</a></li>
       <li><a href="#contact">Contact</a></li>
       <li class="navRightSide"><a class="active" href="/logout">Logout</a></li>
     </ul>

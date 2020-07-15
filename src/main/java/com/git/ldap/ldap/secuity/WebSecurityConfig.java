@@ -12,6 +12,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.StandardPasswordEncoder;
+import org.springframework.security.web.util.matcher.AndRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
 @EnableWebSecurity
 @Configuration
@@ -23,32 +27,34 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Autowired
   CustomUserDetailsMapper mycustomeDetailMapper;
 
+  
   @Autowired
   UserService myUserDetailServicerem;
   
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-      http
-        .authorizeRequests()
-        .anyRequest().authenticated()
-        .and()
-        .formLogin()
-        .loginPage("/login")
-        .usernameParameter("user")
-        .passwordParameter("pwd")
-        .defaultSuccessUrl("/dashboard", true)
-        .failureForwardUrl("/login")
-        .permitAll()
-        .and()
-        .logout()
-        .logoutSuccessUrl("/")
-        .and()
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER).and()
-        .rememberMe().tokenValiditySeconds(86400);
+    protected void configure(final HttpSecurity http) throws Exception {
+      http.authorizeRequests().antMatchers("/userCreate","/users","/user","/remove/**").permitAll().and()
+      .authorizeRequests() 
+.anyRequest().authenticated() 
+.and() 
+.formLogin() 
+.loginPage("/login") 
+.usernameParameter("user") 
+.passwordParameter("pwd") 
+.defaultSuccessUrl("/dashboard", true) 
+.failureForwardUrl("/login") 
+.permitAll() 
+.and() 
+.logout() 
+.logoutSuccessUrl("/") 
+.and() 
+.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER).and() 
+.rememberMe().tokenValiditySeconds(86400).and().userDetailsService(myUserDetailServicerem);
+
     }
   
     @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+    public void configure(final AuthenticationManagerBuilder auth) throws Exception {
       auth.
       ldapAuthentication()
           .userDetailsContextMapper(mycustomeDetailMapper)
@@ -58,18 +64,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .url("ldap://localhost:8389/dc=springframework,dc=org")
             .and()  
           .passwordCompare()
-            .passwordEncoder(new BCryptPasswordEncoder())
-            .passwordAttribute("userPassword")
-            .and().ldapAuthoritiesPopulator(myUserDetailService)
-            .and().userDetailsService(myUserDetailServicerem);     
+            .passwordEncoder(encoder())
+            .passwordAttribute("userPassword");     
     } 
 
     @Bean("authenticationManager")
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
             return super.authenticationManagerBean();
-    }    
-  }
+    } 
+
+    @Bean
+    public PasswordEncoder encoder() {
+      return new BCryptPasswordEncoder();
+    }
+    }
 
 
 

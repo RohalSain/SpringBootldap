@@ -22,7 +22,8 @@ public class MyAuthoritiesPopulator implements LdapAuthoritiesPopulator {
     @Override
     public Collection<? extends GrantedAuthority> getGrantedAuthorities(DirContextOperations userData,String username) {
         System.out.println("Name is "+username);
-        User user = userRepository.findByUsername(username);
+        //User user = userRepository.findByUsername(username);
+        User user = User.getInstance(username,userRepository);
         List<GrantedAuthority> authorities = new ArrayList<>();
 
         // Extract list of permissions (name)
@@ -37,7 +38,8 @@ public class MyAuthoritiesPopulator implements LdapAuthoritiesPopulator {
             authorities.add(authority);
         });
 
-        return authorities;
+        //return authorities;
+        return  null;
     }
 
 }

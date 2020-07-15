@@ -5,31 +5,49 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import javax.validation.constraints.NotBlank;
+
 import com.couchbase.client.java.repository.annotation.Field;
 import com.couchbase.client.java.repository.annotation.Id;
+import com.git.ldap.ldap.secuity.UserRepository;
 
 import org.springframework.data.couchbase.core.mapping.Document;
+import org.springframework.stereotype.Component;
 
-
+@Component
 @Document
-public class User {
+public  class User {
+
+    
 
     @Id
     private String id;
 
+    @NotBlank(message = "enter valid username")
     @Field
     private String username;
 
+    @NotBlank(message ="enter valdi password")
     @Field
     private String password;
 
+    @Field
     private int active;
+
+
+    @Field
+    private String email;
 
     @Field
     private String roles = "";
 
     @Field
     private String permissions = "";
+
+    public static User getInstance(String username,UserRepository userRepository) 
+    {      
+        return userRepository.findByUsername(username);
+    } 
 
     public User(String cid,String username, String password, String roles, String permissions){
         this.id = cid;
@@ -40,7 +58,12 @@ public class User {
         this.active = 1;
     }
 
-    protected User(){}
+    public User(){}
+    public User(String username,String password,String email) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
 
     public String getId() {
         return id;
@@ -87,4 +110,29 @@ public class User {
     public void setId(String id) {
         this.id = id;
     }
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setActive(int active) {
+        this.active = active;
+    }
+    public void setPermissions(String permissions) {
+        this.permissions = permissions;
+    }
+    public void setRoles(String roles) {
+        this.roles = roles;
+    }
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
 }

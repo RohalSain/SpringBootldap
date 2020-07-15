@@ -24,13 +24,14 @@ public class CustomUserDetailsMapper  extends LdapUserDetailsMapper {
     @Override
     public UserDetails mapUserFromContext(DirContextOperations ctx, String username,
             Collection<? extends GrantedAuthority> authorities) {
-            System.out.println("Name is"+username);
+            //System.out.println("Name is"+username);
             //return (UserDetails) this.userDetailService.loadUserByUsername(username);
 
-            User user = userRepository.findByUsername(username);
+            User user = User.getInstance(username,userRepository);
             UserPrincipal userPrincipal = new UserPrincipal(user);
             return userPrincipal;
       
     }
+    
 }
     

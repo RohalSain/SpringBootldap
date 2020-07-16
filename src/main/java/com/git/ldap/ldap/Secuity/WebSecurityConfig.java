@@ -12,39 +12,46 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 @EnableWebSecurity
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    
 
   @Autowired
   CustomUserDetailsMapper mycustomeDetailMapper;
 
-  
   @Autowired
   UserService myUserDetailServicerem;
-  
-    @Override
-    protected void configure(final HttpSecurity http) throws Exception {
-      http.authorizeRequests().antMatchers("/userCreate","/users","/user","/remove/**").permitAll().anyRequest().authenticated() 
-.and() 
-.formLogin() 
-.loginPage("/login") 
-.usernameParameter("user") 
-.passwordParameter("pwd") 
-.defaultSuccessUrl("/dashboard", true) 
-.failureForwardUrl("/login") 
-.permitAll() 
-.and() 
-.logout().logoutUrl("/logout")
-.logoutSuccessUrl("/login").deleteCookies("JSESSIONID").invalidateHttpSession(true); 
 
-http.rememberMe().alwaysRemember(false).tokenValiditySeconds(86400).rememberMeParameter("remember-me").key("remember-me");
+  @Override
+  protected void configure(final HttpSecurity http) throws Exception {
+    http
+    .authorizeRequests()
+    .antMatchers("/userCreate", "/users", "/user", "/remove/**")
+    .permitAll()
+    
+    .anyRequest()
+        .authenticated()
+        .and()
+        .formLogin()
+        .loginPage("/login")
+        .usernameParameter("user")
+        .passwordParameter("pwd")
+        .defaultSuccessUrl("/dashboard", true)
+        .failureForwardUrl("/login")
+        .permitAll()
+        .and()
+        .logout()
+        .logoutUrl("/logout")
+        .logoutSuccessUrl("/login");
 
-    }
-  
-    @Override
+    http.rememberMe().alwaysRemember(false).rememberMeCookieName("remember-me").key("remember-me").tokenValiditySeconds(86400);    
+
+  }
+
+
+  @Override
     public void configure(final AuthenticationManagerBuilder auth) throws Exception {
       auth.
       ldapAuthentication()
@@ -56,14 +63,17 @@ http.rememberMe().alwaysRemember(false).tokenValiditySeconds(86400).rememberMePa
             .and()  
           .passwordCompare()
             .passwordEncoder(encoder())
-            .passwordAttribute("userPassword");     
+            .passwordAttribute("userPassword");
+      auth.userDetailsService(myUserDetailServicerem);        
+            
+
     } 
 
     @Bean("authenticationManager")
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
             return super.authenticationManagerBean();
-    } 
+    }
 
     @Bean
     public PasswordEncoder encoder() {

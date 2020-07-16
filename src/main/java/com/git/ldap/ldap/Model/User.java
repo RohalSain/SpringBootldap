@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import javax.validation.constraints.NotBlank;
 
+import com.couchbase.client.java.bucket.api.Get;
 import com.couchbase.client.java.repository.annotation.Field;
 import com.couchbase.client.java.repository.annotation.Id;
 import com.git.ldap.ldap.Repository.UserRepository;
@@ -32,6 +33,8 @@ public  class User {
     @Field
     private int active;
 
+    @Field
+    private boolean passwordStatusChange = false;
 
     @Field
     private String email;
@@ -40,12 +43,7 @@ public  class User {
     private String roles = "";
 
     @Field
-    private String permissions = "";
-
-    public static User getInstance(String username,UserRepository userRepository) 
-    {      
-        return userRepository.findByUsername(username);
-    } 
+    private String permissions = ""; 
 
     public User(String cid,String username, String password, String roles, String permissions){
         this.id = cid;
@@ -133,4 +131,11 @@ public  class User {
         this.username = username;
     }
 
+    public void setPasswordStatusChange(boolean passwordStatusChange) {
+        this.passwordStatusChange = passwordStatusChange;
+    }
+    
+    public boolean getPasswordStatusChange() {
+        return passwordStatusChange;
+    }
 }

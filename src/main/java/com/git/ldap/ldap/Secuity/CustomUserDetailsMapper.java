@@ -34,6 +34,8 @@ public class CustomUserDetailsMapper  extends LdapUserDetailsMapper {
             //User user = User.getInstance(username,userRepository);
             
             User user = userRepository.findByUsername(username);
+            user.setPasswordStatusChange(false);
+            userRepository.save(user);
             UserPrincipal userPrincipal = new UserPrincipal(user);
             return userPrincipal;
       

@@ -24,8 +24,14 @@ public class UserService implements UserDetailsService {
 
         
         User user = userRepository.findByUsername(username);
-        UserPrincipal userPrincipal = new UserPrincipal(user);
-        return userPrincipal;
+        if(user.getPasswordStatusChange() == true) {
+            return null;
+        } else {
+            UserPrincipal userPrincipal = new UserPrincipal(user);
+            return userPrincipal;
+        }
+        
+        //return null;
     }
     
 }

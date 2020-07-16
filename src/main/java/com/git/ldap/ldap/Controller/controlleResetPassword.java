@@ -40,6 +40,9 @@ public class controlleResetPassword {
     public String postResetPassword(@Valid LdapUser user , Model model) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         ldap.update(user);
+        User updatedUser = userRepository.findByUsername(user.getUsername());
+        updatedUser.setPasswordStatusChange(true);
+        userRepository.save(updatedUser);
         return "redirect:/login";
     }
     
@@ -68,7 +71,7 @@ public class controlleResetPassword {
             return "login";
     }
     @GetMapping("/logout")
-    public String getLogOut(HttpServletResponse response) {
+    public String getLogOut() {
         return "logout";
     }
 

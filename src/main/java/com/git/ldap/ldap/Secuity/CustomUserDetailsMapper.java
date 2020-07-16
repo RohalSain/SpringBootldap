@@ -1,8 +1,10 @@
-package com.git.ldap.ldap.secuity.model;
+package com.git.ldap.ldap.Secuity;
 
 import java.util.Collection;
 
-import com.git.ldap.ldap.secuity.UserRepository;
+import com.git.ldap.ldap.Repository.UserRepository;
+import com.git.ldap.ldap.LdapSecurity.ldapCrudImple;
+import com.git.ldap.ldap.Model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ldap.core.DirContextOperations;
@@ -18,7 +20,9 @@ public class CustomUserDetailsMapper  extends LdapUserDetailsMapper {
     // private UserDetailsService userDetailService;
 
     @Autowired
-    private UserRepository userRepository;   
+    private UserRepository userRepository;  
+    
+    private ldapCrudImple ldap;
 
 
     @Override
@@ -27,7 +31,9 @@ public class CustomUserDetailsMapper  extends LdapUserDetailsMapper {
             //System.out.println("Name is"+username);
             //return (UserDetails) this.userDetailService.loadUserByUsername(username);
 
-            User user = User.getInstance(username,userRepository);
+            //User user = User.getInstance(username,userRepository);
+            
+            User user = userRepository.findByUsername(username);
             UserPrincipal userPrincipal = new UserPrincipal(user);
             return userPrincipal;
       

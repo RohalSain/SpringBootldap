@@ -9,20 +9,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-        <form:form modelAttribute="changePassword" method="POST" >
+        <form:form modelAttribute="userUpdate" action="/resetPassword" method="POST" >
         <c:if test="${status == 'true'}">
             <div class="error">
                  <span>${error}</span>
             </div>
         </c:if>
-      <h1>ldap User Creation:</h1>
+      <h1>ldap Update:</h1>
 
       <label>Username :</label>
       <form:input path ="username" type="text"/>
-      <br/>
-
-      <label>Email :</label>
-      <form:input path ="email" type="email"/>
       <br/>
 
       <label>Password :</label>

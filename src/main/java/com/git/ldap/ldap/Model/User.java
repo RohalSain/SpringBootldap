@@ -1,4 +1,4 @@
-package com.git.ldap.ldap.secuity.model;
+package com.git.ldap.ldap.Model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,12 +9,10 @@ import javax.validation.constraints.NotBlank;
 
 import com.couchbase.client.java.repository.annotation.Field;
 import com.couchbase.client.java.repository.annotation.Id;
-import com.git.ldap.ldap.secuity.UserRepository;
+import com.git.ldap.ldap.Repository.UserRepository;
 
 import org.springframework.data.couchbase.core.mapping.Document;
-import org.springframework.stereotype.Component;
 
-@Component
 @Document
 public  class User {
 

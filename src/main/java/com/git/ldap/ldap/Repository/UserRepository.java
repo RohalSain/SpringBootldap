@@ -1,6 +1,6 @@
-package com.git.ldap.ldap.secuity;
+package com.git.ldap.ldap.Repository;
 
-import com.git.ldap.ldap.secuity.model.User;
+import com.git.ldap.ldap.Model.User;
 
 import org.springframework.data.couchbase.core.query.N1qlPrimaryIndexed;
 import org.springframework.data.couchbase.core.query.ViewIndexed;

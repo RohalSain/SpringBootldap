@@ -1,8 +1,8 @@
-package com.git.ldap.ldap.ldapCrudOperations;
+package com.git.ldap.ldap.LdapSecurity;
 
 import java.util.List;
 
-import com.git.ldap.ldap.secuity.model.LdapUser;
+import com.git.ldap.ldap.Model.LdapUser;
 
 
 public interface ldapCrudRepo {

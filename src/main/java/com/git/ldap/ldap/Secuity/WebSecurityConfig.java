@@ -1,6 +1,5 @@
-package com.git.ldap.ldap.secuity;
+package com.git.ldap.ldap.Secuity;
 
-import com.git.ldap.ldap.secuity.model.CustomUserDetailsMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -13,16 +12,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.password.StandardPasswordEncoder;
-import org.springframework.security.web.util.matcher.AndRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
 
 @EnableWebSecurity
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     
-  @Autowired
-  MyAuthoritiesPopulator myUserDetailService;
 
   @Autowired
   CustomUserDetailsMapper mycustomeDetailMapper;
@@ -33,9 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
-      http.authorizeRequests().antMatchers("/userCreate","/users","/user","/remove/**").permitAll().and()
-      .authorizeRequests() 
-.anyRequest().authenticated() 
+      http.authorizeRequests().antMatchers("/userCreate","/users","/user","/remove/**").permitAll().anyRequest().authenticated() 
 .and() 
 .formLogin() 
 .loginPage("/login") 
@@ -45,11 +37,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 .failureForwardUrl("/login") 
 .permitAll() 
 .and() 
-.logout() 
-.logoutSuccessUrl("/") 
-.and() 
-.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER).and() 
-.rememberMe().tokenValiditySeconds(86400).and().userDetailsService(myUserDetailServicerem);
+.logout().logoutUrl("/logout")
+.logoutSuccessUrl("/login").deleteCookies("JSESSIONID").invalidateHttpSession(true); 
+
+http.rememberMe().alwaysRemember(false).tokenValiditySeconds(86400).rememberMeParameter("remember-me").key("remember-me");
 
     }
   

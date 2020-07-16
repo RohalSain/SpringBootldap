@@ -1,8 +1,10 @@
-package com.git.ldap.ldap.secuity.model;
+package com.git.ldap.ldap.Secuity;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import com.git.ldap.ldap.Model.User;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

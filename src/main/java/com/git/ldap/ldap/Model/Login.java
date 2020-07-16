@@ -1,4 +1,4 @@
-package com.git.ldap.ldap.secuity.model;
+package com.git.ldap.ldap.Model;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;

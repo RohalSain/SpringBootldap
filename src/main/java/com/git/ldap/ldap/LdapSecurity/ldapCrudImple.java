@@ -1,4 +1,4 @@
-package com.git.ldap.ldap.ldapCrudOperations;
+package com.git.ldap.ldap.LdapSecurity;
 
 import static org.springframework.ldap.query.LdapQueryBuilder.query;
 
@@ -11,8 +11,7 @@ import javax.naming.directory.BasicAttribute;
 import javax.naming.directory.BasicAttributes;
 import javax.naming.directory.SearchControls;
 
-import com.git.ldap.ldap.secuity.model.LdapUser;
-
+import com.git.ldap.ldap.Model.LdapUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ldap.core.AttributesMapper;
 import org.springframework.ldap.core.LdapTemplate;

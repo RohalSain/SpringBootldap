@@ -1,13 +1,9 @@
-package com.git.ldap.ldap.secuity.Dbinit;
+package com.git.ldap.ldap.Dbinit;
 
-import com.git.ldap.ldap.secuity.UserRepository;
-import com.git.ldap.ldap.secuity.model.User;
+import com.git.ldap.ldap.Repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
